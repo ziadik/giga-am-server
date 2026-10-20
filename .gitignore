@@ -1,0 +1,50 @@
+# Node
+node_modules/
+npm-debug.log*
+package-lock.json
+yarn.lock
+
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+pip-log.txt
+.pytest_cache/
+*.egg-info/
+
+# Загрузки и временные
+gigaam/uploads/
+*.wav
+*.webm
+*.mp3
+*.m4a
+*.ogg
+*.flac
+*.aac
+
+# SSL
+*.pem
+*.key
+*.crt
+*.pfx
+
+# Модели и веса
+gigaam/models/
+*.bin
+*.pt
+*.pth
+*.onnx
+*.safetensors
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Логи
+logs/
+*.log
