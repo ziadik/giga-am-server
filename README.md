@@ -30,3 +30,9 @@
 
 ```bash
 npm install
+
+
+cd C:\Projects\js\giga-am-server
+venv\Scripts\activate
+$env:PATH = "C:\ffmpeg\bin;" + $env:PATH
+python gigaam\gigaam_transcribe.py "путь\к\Планшету.wav"

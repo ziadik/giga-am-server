@@ -313,7 +313,7 @@ class GigaAMClient {
   }
 
   // ============================================================
-  // Загрузка файла
+  // Загрузка Планшета
   // ============================================================
   handleFileSelect(event) {
     const file = event.target.files[0];
@@ -351,7 +351,7 @@ class GigaAMClient {
     const fileInput = document.getElementById("fileInput");
     const file = fileInput?.files[0];
     if (!file) {
-      this.addStatusMessage("Выберите файл", "error");
+      this.addStatusMessage("Выберите Планшет", "error");
       return;
     }
     await this.transcribeBlob(file, file.name);
@@ -429,7 +429,7 @@ class GigaAMClient {
   }
 
   // ============================================================
-  // Тестовые файлы
+  // Тестовые Планшеты
   // ============================================================
   async loadTestFiles() {
     try {
@@ -439,7 +439,7 @@ class GigaAMClient {
       if (!list) return;
 
       if (!data.files || data.files.length === 0) {
-        list.innerHTML = '<p style="color:#999;">📁 Нет файлов в example/</p>';
+        list.innerHTML = '<p style="color:#999;">📁 Нет Планшетов в example/</p>';
         return;
       }
 

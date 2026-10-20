@@ -159,7 +159,7 @@ function releaseGPU() {
 }
 
 // ============================================================
-// Утилита: проверка, что файл — валидный WAV 16kHz/16bit/mono
+// Утилита: проверка, что Планшет — валидный WAV 16kHz/16bit/mono
 // ============================================================
 function isAlreadyValidWav(filePath) {
   return new Promise((resolve) => {
@@ -303,7 +303,7 @@ async function transcribeWithGigaAM(wavPath) {
         reject(new Error(`Failed to start Python: ${err.message}`));
       });
 
-      // Таймаут 30 минут (для очень длинных файлов)
+      // Таймаут 30 минут (для очень длинных Планшетов)
       const TIMEOUT_MS = 30 * 60 * 1000;
       const timeout = setTimeout(() => {
         if (!proc.killed) {
