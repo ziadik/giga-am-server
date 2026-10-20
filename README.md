@@ -4,6 +4,8 @@
 
 > Автор: **Зядик Дмитрий Сергеевич** | [https://ziidik.ru/](https://ziidik.ru/)
 
+<img width="1175" height="895" alt="image" src="https://github.com/user-attachments/assets/b4ef0c3a-83c0-4cac-8770-0a333a2db3d0" />
+
 ## ✨ Особенности
 
 - 🇷🇺 **Только русский** — оптимизирован под русскую речь
