@@ -1,114 +1,198 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GigaAM — Распознавание русской речи</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <div class="container">
-        <header>
-            <h1>🎙️ GigaAM Server</h1>
-            <p>Распознавание русской речи на GigaAM v2 (GPU)</p>
-            <p class="author-header">
-                Автор: <a href="https://ziidik.ru/" target="_blank" rel="noopener">Зядик Дмитрий Сергеевич</a>
-            </p>
-            <div class="server-status" id="serverStatus">
-                <span class="status-indicator"></span>
-                <span id="statusText">Проверка подключения...</span>
-            </div>
-        </header>
+      <header>
+        <h1>🎙️ GigaAM Server</h1>
+        <p>Распознавание русской речи на GigaAM v2 (GPU)</p>
+        <p class="author-header">
+          Автор:
+          <a href="https://ziidik.ru/" target="_blank" rel="noopener"
+            >Зядик Дмитрий Сергеевич</a
+          >
+        </p>
+        <div class="server-status" id="serverStatus">
+          <span class="status-indicator"></span>
+          <span id="statusText">Проверка подключения...</span>
+        </div>
+      </header>
 
-        <div class="main-content">
-            <!-- Запись с микрофона -->
-            <div id="microphoneSection" class="recording-section">
-                <h2>🎤 Запись с микрофона</h2>
-                <div class="recording-controls">
-                    <button id="recordBtn" class="btn btn-record">
-                        <span class="btn-icon">🎤</span>
-                        Начать запись
-                    </button>
-                    <button id="stopBtn" class="btn btn-stop" disabled>
-                        <span class="btn-icon">⏹️</span>
-                        Остановить
-                    </button>
-                </div>
-
-                <div class="visualizer">
-                    <canvas id="visualizer"></canvas>
-                </div>
-
-                <div class="recording-info">
-                    <span id="recordingTime">00:00</span>
-                    <span id="recordingStatus"></span>
-                </div>
-            </div>
-
-            <!-- Загрузка Планшета -->
-            <div class="file-section">
-                <h2>📤 Загрузка Планшета</h2>
-                <div class="file-upload">
-                    <input type="file" id="fileInput" accept=".wav,.mp3,.m4a,.webm,.ogg,.flac,.aac" />
-                    <button id="uploadBtn" class="btn btn-primary" disabled>
-                        📤 Распознать Планшет
-                    </button>
-                </div>
-                <div id="fileInfo" class="file-info"></div>
-            </div>
-
-            <!-- Тестовые Планшеты -->
-            <div class="file-section">
-                <h2>📁 Тестовые Планшеты</h2>
-                <p style="color: #666; margin-bottom: 15px; font-size: 14px;">
-                    Планшеты из папки <code>example/</code>
-                </p>
-                <div id="testFileList" class="test-files-list">
-                    <div class="loading-spinner">⏳ Загрузка...</div>
-                </div>
-            </div>
-
-            <!-- Результаты -->
-            <div class="results-section">
-                <div class="results-header">
-                    <h2>Результат распознавания</h2>
-                    <div class="results-controls">
-                        <label class="view-toggle">
-                            <input type="radio" name="resultView" value="with-time" checked>
-                            <span>⏱ С таймкодами</span>
-                        </label>
-                        <label class="view-toggle">
-                            <input type="radio" name="resultView" value="without-time">
-                            <span>📝 Без таймкодов</span>
-                        </label>
-                        <button id="copyBtn" class="btn btn-small" disabled>📋 Копировать</button>
-                    </div>
-                </div>
-                <div class="transcription-result" id="transcriptionResult">
-                    <div class="placeholder">Запишите аудио или загрузите Планшет...</div>
-                </div>
-            </div>
-
-            <!-- Прогресс и статус -->
-            <div class="progress-section">
-                <div class="progress-bar" style="display: none;">
-                    <div class="progress-fill"></div>
-                </div>
-                <div class="status-messages" id="statusMessages"></div>
-            </div>
+      <div class="main-content">
+        <!-- ПЕРЕКЛЮЧАТЕЛЬ РЕЖИМОВ -->
+        <div class="mode-tabs">
+          <button class="mode-tab active" data-mode="offline">
+            🎯 STT (файл)
+          </button>
+          <button class="mode-tab" data-mode="diarized">
+            👥 STT + диаризация
+          </button>
+          <button class="mode-tab" data-mode="live">
+            🎙 Voice typing (live)
+          </button>
         </div>
 
-        <footer>
-            <p>GigaAM v2 RNNT | GPU CUDA | 🇷🇺 только русский</p>
-            <p style="font-size: 12px; margin-top: 5px;">
-                ⚠️ Для работы с микрофоном используйте <strong>localhost</strong> или <strong>HTTPS</strong>
+        <!-- ===== РЕЖИМ 1: OFFLINE STT (запись + загрузка) ===== -->
+        <div class="mode-panel active" data-mode="offline">
+          <div class="recording-section">
+            <h2>🎤 Запись с микрофона</h2>
+            <div class="recording-controls">
+              <button id="recordBtn" class="btn btn-record">
+                🎤 Начать запись
+              </button>
+              <button id="stopBtn" class="btn btn-stop" disabled>
+                ⏹ Остановить
+              </button>
+            </div>
+            <div class="visualizer"><canvas id="visualizer"></canvas></div>
+            <div class="recording-info">
+              <span id="recordingTime">00:00</span>
+              <span id="recordingStatus"></span>
+            </div>
+          </div>
+
+          <div class="file-section">
+            <h2>📤 Загрузка файла</h2>
+            <div class="file-upload">
+              <input
+                type="file"
+                id="fileInput"
+                accept=".wav,.mp3,.m4a,.webm,.ogg,.flac,.aac"
+              />
+              <button id="uploadBtn" class="btn btn-primary" disabled>
+                📤 Распознать файл
+              </button>
+            </div>
+            <div id="fileInfo" class="file-info"></div>
+          </div>
+        </div>
+
+        <!-- ===== РЕЖИМ 2: DIARIZED ===== -->
+        <div class="mode-panel" data-mode="diarized">
+          <div class="file-section">
+            <h2>👥 STT с диаризацией</h2>
+            <p style="color: #666; font-size: 14px; margin-bottom: 10px">
+              Разделяет речь по спикерам (нужен HF_TOKEN и принятые условия на
+              HF). Долгая обработка: ~1–2× длительности файла.
             </p>
-            <p class="author-footer">
-                Зядик Дмитрий Сергеевич | <a href="https://ziidik.ru/" target="_blank" rel="noopener">https://ziidik.ru/</a>
-            </p>
-        </footer>
+            <div class="file-upload">
+              <input
+                type="file"
+                id="diarFileInput"
+                accept=".wav,.mp3,.m4a,.webm,.ogg,.flac,.aac"
+              />
+              <button id="diarUploadBtn" class="btn btn-primary" disabled>
+                👥 Распознать с диаризацией
+              </button>
+            </div>
+            <div id="diarFileInfo" class="file-info"></div>
+          </div>
+        </div>
+
+        <!-- ===== РЕЖИМ 3: LIVE ===== -->
+        <div class="mode-panel" data-mode="live">
+          <div class="recording-section">
+            <h2>🎙 Voice typing (живой)</h2>
+            <div class="recording-controls">
+              <button id="voiceTypingBtn" class="btn btn-primary">
+                🎯 Voice typing
+              </button>
+              <button id="stopVoiceBtn" class="btn btn-stop" disabled>
+                ⏹ Стоп
+              </button>
+            </div>
+            <div class="visualizer"><canvas id="visualizerLive"></canvas></div>
+
+            <div id="speechIndicator" class="speech-indicator idle">
+              <span class="speech-dot"></span>
+              <span class="speech-text" id="speechIndicatorText">Ожидание</span>
+            </div>
+
+            <div class="recording-info">
+              <span id="recordingTimeLive">00:00</span>
+              <span id="vadStatus" style="color: #667eea"></span>
+            </div>
+
+            <div
+              id="liveTranscript"
+              class="live-transcript"
+              style="display: none"
+            ></div>
+          </div>
+        </div>
+
+        <!-- ===== ТЕСТОВЫЕ ФАЙЛЫ (видны во всех режимах, кроме live) ===== -->
+        <!-- <div class="file-section" id="testFilesSection">
+          <h2>📁 Тестовые файлы</h2>
+          <p style="color: #666; margin-bottom: 15px; font-size: 14px">
+            Из папки <code>example/</code>
+          </p>
+          <div id="testFileList" class="test-files-list">
+            <div class="loading-spinner">⏳ Загрузка...</div>
+          </div>
+        </div> -->
+
+        <!-- ===== РЕЗУЛЬТАТ (общий) ===== -->
+        <div class="results-section">
+          <div class="results-header">
+            <h2>Результат</h2>
+            <div class="results-controls">
+              <label class="view-toggle">
+                <input
+                  type="radio"
+                  name="resultView"
+                  value="with-time"
+                  checked
+                />
+                <span>⏱ С таймкодами</span>
+              </label>
+              <label class="view-toggle">
+                <input type="radio" name="resultView" value="without-time" />
+                <span>📝 Без таймкодов</span>
+              </label>
+              <label class="view-toggle">
+                <input type="radio" name="resultView" value="dialog" />
+                <span>👥 Диалог</span>
+              </label>
+              <button id="copyBtn" class="btn btn-small" disabled>
+                📋 Копировать
+              </button>
+            </div>
+          </div>
+          <div class="transcription-result" id="transcriptionResult">
+            <div class="placeholder">
+              Запишите / загрузите файл / включите voice typing...
+            </div>
+          </div>
+        </div>
+
+        <div class="progress-section">
+          <div class="progress-bar" style="display: none">
+            <div class="progress-fill"></div>
+          </div>
+          <div class="status-messages" id="statusMessages"></div>
+        </div>
+      </div>
+      <footer>
+        <p>GigaAM v2 RNNT | GPU CUDA | 🇷🇺 только русский</p>
+        <p style="font-size: 12px; margin-top: 5px">
+          ⚠️ Для работы с микрофоном используйте <strong>localhost</strong> или
+          <strong>HTTPS</strong>
+        </p>
+        <p class="author-footer">
+          Зядик Дмитрий Сергеевич |
+          <a href="https://ziidik.ru/" target="_blank" rel="noopener"
+            >https://ziidik.ru/</a
+          >
+        </p>
+      </footer>
     </div>
 
     <script src="client.js"></script>
-</body>
+  </body>
 </html>
