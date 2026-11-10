@@ -7,6 +7,9 @@
 диаризацией спикеров (**pyannote.audio 4.x**) и живым режимом **voice typing**.
 
 > Автор: **Зядик Дмитрий Сергеевич** | [https://ziidik.ru/](https://ziidik.ru/)
+<img width="1185" height="1132" alt="image" src="https://github.com/user-attachments/assets/2bcc5381-50d2-40aa-8814-e8e28beb7806" />
+
+
 
 ---
 <img width="1175" height="895" alt="image" src="https://github.com/user-attachments/assets/b4ef0c3a-83c0-4cac-8770-0a333a2db3d0" />
@@ -64,7 +67,7 @@
 
 ### 1. Клонирование и npm-зависимости
 
-```bash
-git clone <repo>
-cd giga-am-server
-npm install
+cd C:\Projects\js\giga-am-server
+venv\Scripts\activate
+$env:PATH = "C:\ffmpeg\bin;" + $env:PATH
+python gigaam\gigaam_transcribe.py "путь\к\Планшету.wav"
