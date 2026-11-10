@@ -10,10 +10,6 @@
 <img width="1185" height="1132" alt="image" src="https://github.com/user-attachments/assets/2bcc5381-50d2-40aa-8814-e8e28beb7806" />
 
 
-
----
-<img width="1175" height="895" alt="image" src="https://github.com/user-attachments/assets/b4ef0c3a-83c0-4cac-8770-0a333a2db3d0" />
-
 ## ✨ Возможности
 
 ### Три режима распознавания
